@@ -6,7 +6,7 @@
 }
 
 .parent {
-    background-color: #DAAD86;
+    background-color: #aeaeae;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@
 
 .child {
     display: flex;
-    background-color: #659DBD;
+    background-color: #52746ecf; 
     height: 80vh;
     width: 50%;
     border-radius: 10px;
@@ -39,7 +39,7 @@ input {
 }
 
 button {
-    background-color: #DAAD86;
+    background-color: #a1da8683;
     padding: 10px;
     color: white;
     border: none;

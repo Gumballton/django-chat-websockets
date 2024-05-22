@@ -6,7 +6,7 @@
 
 
     .parent {
-      background-color: #B1A296;
+      background-color: #c0c0c0;
     }
 
     nav {
@@ -105,7 +105,7 @@
         margin: 10px;
         border-radius: 10px;
         padding: 10px;
-        background-color: #FBEEC1;
+        background-color: #fbe0c1;
     }
 
     .chat-body-parent {
@@ -131,7 +131,7 @@
     }
 
     .chat-body .message .receive, .send {
-        background-color: #B1A296;
+        background-color: #fbe0c1a8;
         max-width: 400px;
        
         border-radius: 10px;
@@ -173,7 +173,7 @@
     form button {
         width: 25%;
         padding: 10px;
-        background-color: #FBEEC1;
+        background-color: #fbe0c1;
         border-radius: 5px;
         border: none;
         color: #000;
