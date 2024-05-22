@@ -24,11 +24,25 @@
                       <!-- received messages and displayed here -->
                         {% for i in messages %}
                             {% if i.sender != user %}
-                                <div class="receive">
-                                    <p style="color: #000;">
-                                        <strong>{{ i.sender }}:<br></strong>
-                                        {{ i.message }}</p>
-                                </div>
+                                {% if i.date_message|date:"Y-m-d" == current_date|date:"Y-m-d" %}
+                                    <div class="receive">
+                                        <p style="color: #000;">
+                                            <strong>{{ i.sender }}<span class="small-date"> Today {{ i.date_message|time:"H:i:s" }}</span> :</strong><br>
+                                            {{ i.message }}</p>
+                                    </div>
+                                {% elif i.date_message|date:"Y-m-d"|add:-1 == current_date|date:"Y-m-d"|add:-1 %}
+                                    <div class="receive">
+                                        <p style="color: #000;">
+                                            <strong>{{ i.sender }}<span class="small-date"> Yesterday {{ i.date_message|time:"H:i:s" }}</span> :</strong><br>
+                                            {{ i.message }}</p>
+                                    </div>
+                                {% else %}
+                                    <div class="receive">
+                                        <p style="color: #000;">
+                                            <strong>{{ i.sender }}<span class="small-date"> {{ i.date_message|date:"d.m.Y"}} {{ i.date_message|time:"H:i:s" }}</span> :</strong><br>
+                                            {{ i.message }}</p>
+                                    </div>
+                                {% endif %}
                             {% else %}
                                 <div class="send">
                                     <p style="color: #000;">{{ i.message }}</p>
@@ -88,7 +102,11 @@
         // Here's where we append the message to the chatbox.
         var messageDiv = document.querySelector('.message');
         if (sender != '{{user}}') { // assuming you have a variable `currentUser` to hold the current user's name
-            messageDiv.innerHTML += '<div class="receive"><p style="color: #000;">' + message + '<strong>-' + sender + '</strong></p></div>';
+            messageDiv.innerHTML += '<div class="receive"><p style="color: #000;">' + 
+                message + 
+                '<strong>-' + 
+                    sender + 
+                    '</strong></p></div>';
         } else {
             messageDiv.innerHTML += '<div class="send"><p style="color: #000;">' + message + '</p></div>';
         }

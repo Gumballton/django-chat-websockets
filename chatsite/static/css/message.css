@@ -181,5 +181,11 @@
     @media only screen and (max-width: 600px) {
     .child-2 {
         width: 100%;
-    }
+    }    
+}
+
+.small-date {
+    font-size: 12px; /* Размер шрифта маленькой даты */
+    color: #1f1f1f8f; /* Цвет текста маленькой даты */
+    margin-left: 5px; /* Отступ слева от ника */
 }
