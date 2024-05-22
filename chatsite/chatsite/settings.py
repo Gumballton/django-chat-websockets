@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'daphne',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     
     'chatapp',
 
-    # 'channels'
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -75,7 +75,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'chatsite.wsgi.application'
+ASGI_APPLICATION = 'chatsite.asgi.application'
 
+
+CHANNEL_LAYERS = {
+    'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'},
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
