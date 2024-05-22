@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.utils import timezone
 
 from chatapp.models import MessagesModel, RoomModel
 
@@ -30,6 +31,7 @@ def message_view(request, room_name, username):
         'room_name': room_name,
         'messages': get_messages,
         'user': username, 
+        'current_date': timezone.now().date(),
     }
 
     return render(request, 'message.html', context)
