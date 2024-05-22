@@ -12,12 +12,13 @@ def create_room(request):
 
         try:
             room = RoomModel.objects.get(room_name=get_room)
+            return redirect('room', username=username, room_name=get_room)
 
         except RoomModel.DoesNotExist:
             new_room = RoomModel(room_name=get_room)
             new_room.save()
         
-        return redirect('room', username=username, room_name=room)
+            return redirect('room', username=username, room_name=get_room)
 
     return render(request, 'index.html')
 
