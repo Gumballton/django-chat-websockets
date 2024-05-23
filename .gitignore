@@ -3,3 +3,4 @@ chatsite/chatsite/__pycache__
 chatsite/chatapp/migrations/__pycache__/
 chatsite/chatapp/__pycache__/
 db.sqlite3
+chatsite/chatsite/.env
