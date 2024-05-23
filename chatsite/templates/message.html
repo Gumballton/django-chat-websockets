@@ -1,5 +1,6 @@
-{% load static %}
+{% extends 'base.html' %}
 
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,11 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Messages</title>
+    {% block data %}
     <link rel="stylesheet" href="{% static 'css/message.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% endblock %}
 </head>
 
-<body>
+<!-- <body> -->
+{% block content %}
     <div class="parent">
         <div class="child-2">
             <center><h2>Chat: {{ room_name }}</h2></center><hr>
@@ -63,7 +67,10 @@
             </div>
         </div>
     </div>
-</body>
+<!-- </body> -->
+{% endblock %}
+
+{% block script %}
 <script>
     function scrollToBottom() {
         var chatContainer = document.getElementById("chatContainer");
@@ -131,4 +138,4 @@
     };
 
 </script>
-</html>
+{% endblock %}
