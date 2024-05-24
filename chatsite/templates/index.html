@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,23 +7,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block data %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    {% endblock %}
     <title>Enter Room</title>
 </head>
-<body>
+
+{% block content %}
     <div class="parent">
         <div class="child">
             <h1>Enter Room</h1>
             <form action="" method="POST">
                 {% csrf_token %}
-                <label for="">Username</label><br>
-                <input type="text" placeholder="Username" name="username" required><br>
                 <label for="">Room name</label><br>
                 <input type="text" placeholder="room name" name="room" required><br>
                 <center><button type="submit">Submit</button></center><br>
             </form>
         </div>
     </div>
-</body>
+{% endblock %}
 
 </html>
