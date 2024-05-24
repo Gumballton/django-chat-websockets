@@ -27,7 +27,7 @@
                     <div class="message" id="chatContainer">
                       <!-- received messages and displayed here -->
                         {% for i in messages %}
-                            {% if i.sender != user %}
+                            {% if i.sender != username %}
                                 {% if i.date_message|date:"Y-m-d" == current_date|date:"Y-m-d" %}
                                     <div class="receive">
                                         <p style="color: #000;">
