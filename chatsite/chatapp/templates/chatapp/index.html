@@ -16,11 +16,15 @@
 {% block content %}
     <div class="parent">
         <div class="child">
-            <h1>Enter Room</h1>
+            <h1>{{ title }}</h1>
             <form action="" method="POST">
                 {% csrf_token %}
-                <label for="">Room name</label><br>
-                <input type="text" placeholder="room name" name="room" required><br>
+                <input type="hidden" name="text" value="{{ value }}">   
+                <div class="form-error">{{ form.non_field_errors }}</div>
+                {% for f in form %}
+                <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
+                <div class="form-error">{{ f.errors }}</div>
+                {% endfor %}
                 <center><button type="submit">Submit</button></center><br>
             </form>
         </div>
