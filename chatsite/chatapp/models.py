@@ -1,9 +1,14 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
 class RoomModel(models.Model):
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     room_name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    is_closed = models.BooleanField(default=False)
+    members = models.ManyToManyField(get_user_model(), related_name='joined_users')
 
     def __str__(self):
         return self.room_name
