@@ -152,5 +152,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 LOGOUT_REDIRECT_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'chatapp:create-room'
+LOGIN_REDIRECT_URL = 'chatapp:mainpage'
 LOGIN_URL = 'users:login'
