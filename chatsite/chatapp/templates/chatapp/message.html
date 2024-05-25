@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Messages</title>
+    {% block data %}
+    <link rel="stylesheet" href="{% static 'css/message.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% endblock %}
+</head>
+
+<!-- <body> -->
+{% block content %}
+    <div class="parent">
+        <div class="child-2">
+            <center><h2>Chat: {{ room_name }}</h2></center><hr>
+            <center><h5>Members: {{ room.members.count }}</h5></center>
+
+            <div class="chat-body-parent">
+                <div class="chat-body" id="tasks">
+                    <div class="message" id="chatContainer">
+                      <!-- received messages and displayed here -->
+                        {% for i in messages %}
+                            {% if i.sender != username %}
+                                {% if i.date_message|date:"Y-m-d" == current_date|date:"Y-m-d" %}
+                                    <div class="receive">
+                                        <p style="color: #000;">
+                                            <strong>{{ i.sender }}<span class="small-date"> Today {{ i.date_message|time:"H:i" }}</span> :</strong><br>
+                                            {{ i.message }}</p>
+                                    </div>
+                                {% elif i.date_message|date:"Y-m-d" == yesterday|date:"Y-m-d" %}
+                                    <div class="receive">
+                                        <p style="color: #000;">
+                                            <strong>{{ i.sender }}<span class="small-date"> Yesterday {{ i.date_message|time:"H:i" }}</span> :</strong><br>
+                                            {{ i.message }}</p>
+                                    </div>
+                                {% else %}
+                                    <div class="receive">
+                                        <p style="color: #000;">
+                                            <strong>{{ i.sender }}<span class="small-date"> {{ i.date_message|date:"d.m.Y"}} {{ i.date_message|time:"H:i" }}</span> :</strong><br>
+                                            {{ i.message }}</p>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div class="send">
+                                    <p style="color: #000;">{{ i.message }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    <!-- end receive messages -->
+                    </div>
+
+                    <div class="form">
+                        <form action="" id="message-form" method="POST">
+                            {% csrf_token %}
+                            <textarea id="msg" cols="30" name="message" rows="10" placeholder="Enter your message" required></textarea>
+                            <button class="submit" type="submit">Send</button>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- </body> -->
+{% endblock %}
+
+{% block script %}
+<script>
+    function scrollToBottom() {
+        var chatContainer = document.getElementById("chatContainer");
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    const websocketProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const wsEndpoint = `${websocketProtocol}://${window.location.host}/ws/notification/{{room_name}}/`;
+    const socket = new WebSocket(wsEndpoint);
+
+    document.getElementById('message-form').addEventListener('submit', function(event){
+        event.preventDefault();
+        const message = document.getElementById('msg').value;
+        socket.send(
+            JSON.stringify({
+                'message': message,
+                'room_name': '{{room_name}}',
+                'sender': '{{user}}',
+            })
+        )
+    });
+
+    // response from consumer on server
+    socket.addEventListener("message", (event) => {
+        const messageData = JSON.parse(event.data)['message'];
+        console.log(messageData);
+        
+        var sender = messageData['sender'];
+        var message = messageData['message'];
+
+        // empty message input field after message has been sent
+        if (sender == '{{ user }}');{
+            document.getElementById('msg').value = '';
+        }
+
+        // Here's where we append the message to the chatbox.
+        var messageDiv = document.querySelector('.message');
+        var currentTime = new Date();
+        var hours = currentTime.getHours();
+        var minutes = currentTime.getMinutes();
+        var formattedTime = (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+
+        if (sender != '{{user}}') { // assuming you have a variable `currentUser` to hold the current user's name
+            messageDiv.innerHTML += '<div class="receive"><p style="color: #000;">' + 
+                '<strong>' + 
+                    sender +
+                    '<span class="small-date"> Today '+  formattedTime + '</span>' +
+                     ' : <br>' +
+                    '</strong>' + 
+                    message + 
+                    '</p></div>';
+        } else {
+            messageDiv.innerHTML += '<div class="send"><p style="color: #000;">' + message + '</p></div>';
+        }
+        scrollToBottom();
+
+    });
+
+    socket.onopen = (event) => {
+        console.log("WebSocket connection opened!");
+    };
+
+    socket.onclose = (event) => {
+        console.log("WebSocket connection closed!");
+    };
+
+</script>
+{% endblock %}

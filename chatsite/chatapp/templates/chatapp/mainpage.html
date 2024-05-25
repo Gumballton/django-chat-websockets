@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        {% for chat in chats %}
+        <div class="col-md-6 mb-1 w-10 p-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ chat.room_name }}</h5>
+                    <p class="card-text">{{ chat.description|default:'No description' }}</p>
+                    <a href="{% url 'chatapp:room' chat.room_name %}" class="btn btn-primary">Enter the chat</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <nav aria-label="Page navigation example" style="text-align: center;">
+        <ul class="pagination" style="list-style: none; display: inline-block; margin: 0; padding: 0; margin-bottom: 20px;">
+            {% if page_obj.has_previous %}
+            <li class="page-item" style="display: inline-block;">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous" style="text-decoration: none; font-size: 30px;">&laquo;</a>
+            </li>
+            {% endif %}
+
+            {% for p in paginator.page_range %}
+            {% if page_obj.number == p %}
+            <li class="page-item active" style="display: inline-block;">
+                <span class="page-link" href="?page={{ p }}" style="text-decoration: none; font-size: 30px; color: white;">{{ p }}</span>
+            </li>
+            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+            <li class="page-item" style="display: inline-block;">
+                <a class="page-link" href="?page={{ p }}" style="text-decoration: none; font-size: 30px;">{{ p }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item" style="display: inline-block;">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" style="text-decoration: none; font-size: 30px;">&gt;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    
+    
+
+{% endblock %}
