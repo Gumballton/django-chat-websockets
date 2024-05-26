@@ -38,7 +38,7 @@
                         </div>
                         <form class="d-flex justify-content-end" role="search">
                             {% if user.is_authenticated %}
-                                    <li class="btn btn-outline-light me-2">{{user.username}}</li>
+                                    <a href="{% url 'users:profile' %}" class="btn btn-outline-light me-2">{{ user.username }}</a>
                                     <a href="{% url 'users:logout' %}" class="btn btn-outline-light me-2">Logout</a>
                             {% else %}
                                 <a href="{% url 'users:login' %}" class="btn btn-outline-light me-2">Login</a>
