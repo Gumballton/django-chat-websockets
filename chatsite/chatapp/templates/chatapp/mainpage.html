@@ -5,6 +5,11 @@
         {% for chat in chats %}
         <div class="col-md-6 mb-1 w-10 p-3">
             <div class="card">
+                {% if chat.is_closed %}
+                <h5 class="card-header" style="background-color: #ebebeb; color: #c90000;">Private Chat</h5>
+                {% else %}
+                <h5 class="card-header" style="background-color: #ebebeb; color: #7cc900;">Public Сhat</h5>
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ chat.room_name }}</h5>
                     <p class="card-text">{{ chat.description|default:'No description' }}</p>
