@@ -54,6 +54,9 @@
                 </div>
                 <div>
                     {% if user != room.owner %}
+                    </div>
+                    <h5 style="margin: 0; text-align: center; padding-left: 80px; flex: 1; width: 100%;">Members: {{ room.members.count }}</h5>
+                    <div>
                     <form action="{% url 'users:leave_chat' room.id %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" style="background-color: #659DBD; display: flex; width: 100%;">Leave Chat</button>
