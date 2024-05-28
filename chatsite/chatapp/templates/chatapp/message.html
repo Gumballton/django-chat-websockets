@@ -13,6 +13,7 @@
     <title>Messages</title>
     {% block data %}
     <link rel="stylesheet" href="{% static 'css/message.css' %}">
+    <link rel="stylesheet" href="{% static 'css/window.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {% endblock %}
 </head>
@@ -22,8 +23,47 @@
     <div class="parent">
         <div class="child-2">
             <center><h2>Chat: {{ room_name }}</h2></center><hr>
-            <center><h5>Members: {{ room.members.count }}</h5></center>
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    {% if user == room.owner %}
+                    <form action="{% url 'users:add_member' room_name=room_name %}" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <!-- Поля для добавления пользователей -->
+                        <button type="submit" style="background-color: dodgerblue; display: flex; width: 100%;">Add Member</button>
+                    </form>
+                    </div>
+                    <h5 style="margin: 0; text-align: center; flex: 1; width: 100%;">Members: {{ room.members.count }}</h5>
+                    <div>
 
+                            <button id="deleteChatBtn" style="background-color: dodgerblue; padding: 10px; color: #000; border: none; border-radius: 5px; width: 120%; margin-left: -20%;"
+                            onmouseover="this.style.padding = '10px'; this.style.transition = 'none';"
+                            onmouseout="this.style.padding = '10px';">Delete <br> Chat</button>
+
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p>Are you sure you want to delete this chat?</p>
+                                <form id="deleteForm" action="{% url 'chatapp:delete_chat' room_id=room.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit">Yes, delete.</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if user != room.owner %}
+                    <form action="{% url 'users:leave_chat' room.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: #659DBD; display: flex; width: 100%;">Leave Chat</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            
+
+        {% if not room.is_closed or user == room.owner or user in room.members.all %}
             <div class="chat-body-parent">
                 <div class="chat-body" id="tasks">
                     <div class="message" id="chatContainer">
@@ -65,6 +105,25 @@
                             <button class="submit" type="submit">Send</button>
                         </form>    
                     </div>
+                    {% elif room.is_closed and user != room.owner %}
+                        <p>You need an invitation to join this chat.</p>
+                    
+                    {% endif %}
+
+                    <!-- {% if user == room.owner %}
+                    <form action="{% url 'users:add_member' room_name=room_name %}" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }} -->
+                        <!-- Поля для добавления пользователей -->
+                        <!-- <button type="submit">Add Member</button> -->
+                    <!-- </form>
+                    {% endif %}
+                    {% if user != room.owner %}
+                    <form action="{% url 'users:leave_chat' room.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit">Leave Chat</button>
+                    </form>
+                    {% endif %} -->
                 </div>
             </div>
         </div>
@@ -139,5 +198,32 @@
         console.log("WebSocket connection closed!");
     };
 
+</script>
+
+<!-- JavaScript для управления модальным окном -->
+<script>
+    // Получаем ссылки на кнопку удаления чата и на модальное окно
+    var deleteChatBtn = document.getElementById("deleteChatBtn");
+    var modal = document.getElementById("myModal");
+    
+    // Получаем ссылку на крестик, чтобы закрыть модальное окно
+    var closeBtn = document.getElementsByClassName("close")[0];
+    
+    // Когда пользователь кликает на кнопку "Удалить чат", открываем модальное окно
+    deleteChatBtn.onclick = function() {
+      modal.style.display = "block";
+    }
+    
+    // Когда пользователь кликает на крестик (x), закрываем модальное окно
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // Когда пользователь кликает за пределами модального окна, закрываем его
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
 </script>
 {% endblock %}

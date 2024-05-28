@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
+from chatapp.models import RoomModel
+
 
 class UserLoginForm(AuthenticationForm):
     class Meta:
@@ -27,3 +29,16 @@ class RegisterUserForm(UserCreationForm):
             raise forms.ValidationError('This E-mail already exists!')
         
         return email
+    
+
+class AddMemberFrom(forms.Form):
+    user = forms.CharField(label='Username')
+
+    def clean_user(self):
+        username = self.cleaned_data['user']
+        User = get_user_model()
+        if not User.objects.filter(username=username).exists():
+            raise forms.ValidationError('User with this username does not exist.')
+        
+        return User.objects.get(username=username)
+    

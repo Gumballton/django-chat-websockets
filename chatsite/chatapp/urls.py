@@ -8,4 +8,5 @@ urlpatterns = [
     path('create/', views.create_room, name='create-room'),
     path('enter/', views.enter_room, name='enter-room'),
     path('<str:room_name>/', views.message_view, name='room'),
+    path('delete_chat/<int:room_id>/', views.delete_chat, name='delete_chat'),
 ]
