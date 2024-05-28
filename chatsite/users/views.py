@@ -9,17 +9,18 @@ from django.views.generic import CreateView, ListView, FormView
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import get_user_model
 
 
 from chatapp.models import RoomModel
-from users.forms import AddMemberFrom, RegisterUserForm, UserLoginForm
+from users.forms import AddMemberFrom, ChangePasswordForm, RegisterUserForm, UserLoginForm
 # Create your views here.
 
 
 class UserLoginView(LoginView):
     form_class = UserLoginForm
-    template_name = 'users/register_or_login.html'
+    template_name = 'users/login.html'
     extra_context = {'title': 'Login'}
     success_url = reverse_lazy('chatapp:create-room')
 
@@ -82,7 +83,12 @@ class AddMemberView(LoginRequiredMixin, FormView):
     def get_success_url(self):
         return redirect('chatapp:mainpage')
     
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs['user'] = self.request.user
-    #     return kwargs
+
+
+
+
+class ChangeUserPassword(PasswordChangeView):
+    form_class = ChangePasswordForm
+    template_name = 'users/register_or_login.html'
+    success_url = reverse_lazy('users:change_user_password_done')
+    
