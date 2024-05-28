@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if chats %}
     <div class="row">
         {% for chat in chats %}
 
@@ -49,6 +50,9 @@
             {% endif %}
         </ul>
     </nav>
+{% else %}
+    <center><h1>No chats</h1></center>
+{% endif %}
     
     
 
