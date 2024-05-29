@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{% static 'chatapp/images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <title>{{ title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     {% block data %}
@@ -50,13 +51,15 @@
             </nav>
             </section>
 
+<section class="content">
 {% block content %}
 {% endblock %}
+</section>
 
 {% block script %}
 {% endblock %}
 
-<footer style="background-color: #2b3035; color: #fff; padding: 20px; text-align: center; position: fixed; bottom: 0; width: 100%;">
+<footer>
     <p>Founder / Owner / CEO - Vladimir Petrov</p>
     <p>&copy; 2024 Partial or complete copying of information from this site for distribution on other resources, including paper, is strictly prohibited.</p>
 
