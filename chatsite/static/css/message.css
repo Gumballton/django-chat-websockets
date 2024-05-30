@@ -38,7 +38,7 @@
         height: 100vh;
         display: flex;
         justify-content: center;
-        /* background-image: url("/static/img/bck.jpg");  */
+        
        
         background-position: center; 
         background-repeat: no-repeat; 
@@ -48,17 +48,14 @@
     }
 
     .child-1 {
-        /* height: 70vh; */
         width: 30%;
         margin: 10px;
         border-radius: 10px;
-        
         background-color: white;
     }
 
     .chat-room {
         width: 100%;
-        /* max-height: ; */
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -68,7 +65,6 @@
     }
 
     .profile-pic {
-        /* height: 80px; */
         width: 15%;
         
         border-radius: 50px;
@@ -100,7 +96,6 @@
 
 
     .child-2 {
-        /* max-height: 100vh; */
         width: 50%;
         margin: 10px;
         border-radius: 10px;
@@ -112,11 +107,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        /* height: 60vh; */
     }
 
     .chat-body, .message {
-        /* max-height: 100vh; */
         width: 100%;
         background-color: #557A95;
         border-radius: 10px;
@@ -126,7 +119,7 @@
     }
 
     .message {
-        max-height: 400px;  /* Or whatever height value you see fit */
+        max-height: 400px;  
         overflow-y: auto;
     }
 
@@ -224,3 +217,47 @@
     cursor: pointer;
   }
   
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown:hover .no-hover-resize {
+    padding: 15px;
+    transition: 0.8s;
+  }
+
+footer {
+    background-color: #2b3035;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    flex-shrink: 0;
+    bottom: 0;
+}
