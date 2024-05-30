@@ -29,7 +29,6 @@ This application has the functionality of _registration_, _authorization_, _pass
     Go to your project directory and install dependencies:
 
     ```bash
-    cd django-chat
     pip install -r requirements.txt
     ```
 
