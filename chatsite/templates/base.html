@@ -39,7 +39,13 @@
                         </div>
                         <form class="d-flex justify-content-end" role="search">
                             {% if user.is_authenticated %}
-                                    <a href="{% url 'users:profile' %}" class="btn btn-outline-light me-2">{{ user.username }}</a>
+                                <div class="dropdown">
+                                    <a href="{% url 'users:profile' %}" class="no-hover-resize btn btn-outline-light me-2" onmouseover="showDropdown()">{{ user.username }}</a>
+                                    <div class="dropdown-content" id="dropdownMenu">
+
+                                        <a href="{% url 'users:change_user_password' %}">Change password</a>
+                                    </div>
+                                </div>
                                     <a href="{% url 'users:logout' %}" class="btn btn-outline-light me-2">Logout</a>
                             {% else %}
                                 <a href="{% url 'users:login' %}" class="btn btn-outline-light me-2">Login</a>
@@ -57,6 +63,41 @@
 </section>
 
 {% block script %}
+<script>
+// Showing a drop-down menu when you hover over a button
+function showDropdown() {
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    dropdownMenu.classList.add("show");
+}
+
+// Hide the drop-down menu when you remove the cursor from the button
+function hideDropdown() {
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    dropdownMenu.classList.remove("show");
+
+    // Close the dropdown menu when clicking outside of it
+    var dropdown = document.querySelector('.dropdown');
+    if (!dropdown.contains(event.target)) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
+// Adding event handlers to show and hide the dropdown menu
+document.querySelector('.no-hover-resize').addEventListener('mouseover', function() {
+    showDropdown();
+});
+
+document.querySelector('.dropdown').addEventListener('mouseleave', function() {
+    hideDropdown();
+});
+
+</script>
 {% endblock %}
 
 <footer>
