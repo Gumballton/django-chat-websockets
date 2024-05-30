@@ -29,7 +29,7 @@
                     <form action="{% url 'users:add_member' room_name=room_name %}" method="POST">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <!-- Поля для добавления пользователей -->
+                        <!-- Fields for adding users -->
                         <button type="submit" style="background-color: dodgerblue; display: flex; width: 100%;">Add Member</button>
                     </form>
                     </div>
@@ -113,25 +113,11 @@
                     
                     {% endif %}
 
-                    <!-- {% if user == room.owner %}
-                    <form action="{% url 'users:add_member' room_name=room_name %}" method="POST">
-                        {% csrf_token %}
-                        {{ form.as_p }} -->
-                        <!-- Поля для добавления пользователей -->
-                        <!-- <button type="submit">Add Member</button> -->
-                    <!-- </form>
-                    {% endif %}
-                    {% if user != room.owner %}
-                    <form action="{% url 'users:leave_chat' room.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Leave Chat</button>
-                    </form>
-                    {% endif %} -->
                 </div>
             </div>
         </div>
     </div>
-<!-- </body> -->
+
 {% endblock %}
 
 {% block script %}
@@ -203,26 +189,26 @@
 
 </script>
 
-<!-- JavaScript для управления модальным окном -->
+<!-- JavaScript to control a modal window -->
 <script>
-    // Получаем ссылки на кнопку удаления чата и на модальное окно
+    // Get links to the delete chat button and the modal window
     var deleteChatBtn = document.getElementById("deleteChatBtn");
     var modal = document.getElementById("myModal");
     
-    // Получаем ссылку на крестик, чтобы закрыть модальное окно
+    // Get a link to the cross to close the modal window
     var closeBtn = document.getElementsByClassName("close")[0];
     
-    // Когда пользователь кликает на кнопку "Удалить чат", открываем модальное окно
+    // When the user clicks on the "Delete chat" button, we open a modal window
     deleteChatBtn.onclick = function() {
       modal.style.display = "block";
     }
     
-    // Когда пользователь кликает на крестик (x), закрываем модальное окно
+    // When the user clicks on the cross (x), we close the modal window
     closeBtn.onclick = function() {
       modal.style.display = "none";
     }
     
-    // Когда пользователь кликает за пределами модального окна, закрываем его
+    // When the user clicks outside the modal window, close it
     window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = "none";

@@ -1,4 +1,4 @@
-/* Стили для модального окна */
+/* Modal Window Styles */
 .modal {
     display: none;
     position: fixed;
@@ -11,21 +11,21 @@
     background-color: rgba(0,0,0,0.4);
 }
 
-/* Стили для содержимого модального окна */
+/* Style modal content */
 .modal-content {
     background-color: #eaeaea;
-    margin: 10% auto; /* Отступ сверху и снизу, центрирование по вертикали */
+    margin: 10% auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 50%; /* Ширина контента */
+    width: 50%;
 }
 
-/* Стили для кнопки закрытия */
+/* Styles for the close button */
 .close {
     color: #aaa;
-    position: absolute; /* Положение абсолютное, чтобы можно было точно указать координаты */
-    top: 0; /* Расположение крестика от верхнего края */
-    right: 0; /* Расположение крестика от правого края */
+    position: absolute; 
+    top: 0; 
+    right: 0;
     font-size: 28px;
     font-weight: bold;
 }
